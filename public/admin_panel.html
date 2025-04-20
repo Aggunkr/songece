@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Paneli - Ürün Ekle</title>
+</head>
+<body>
+    <h2>Ürün Ekle</h2>
+    <input type="text" id="name" placeholder="Ürün Adı">
+    <input type="text" id="price" placeholder="Ürün Fiyatı">
+    <input type="text" id="description" placeholder="Açıklama">
+    <input type="text" id="image" placeholder="Resim URL">
+    <button onclick="addProduct()">Ekle</button>
+
+    <script>
+        function addProduct() {
+            const name = document.getElementById("name").value;
+            const price = document.getElementById("price").value;
+            const description = document.getElementById("description").value;
+            const image = document.getElementById("image").value;
+
+            fetch("/products/add", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ name, price, description, image })
+            })
+            .then(res => res.json())
+            .then(data => {
+                alert(data.message);
+            });
+        }
+    </script>
+</body>
+</html>
