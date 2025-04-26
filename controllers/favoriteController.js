@@ -1,51 +1,27 @@
-const Favorite = require("../models/Favorite");
+// controllers/favoriteController.js
+const User = require("../models/User");
 
-const addToFavorites = async (req, res) => {
-  try {
-    const { productId } = req.body;
-    if (!productId) {
-      return res.status(400).json({ msg: "ProductId gerekli" });
-    }
-    // Aynı ürün favorilerdeyse hata döndür
-    const existing = await Favorite.findOne({ userId: req.user.id, productId });
-    if (existing) {
-      return res.status(400).json({ msg: "Bu ürün zaten favorilerde" });
-    }
-    const favorite = new Favorite({ userId: req.user.id, productId });
-    await favorite.save();
-    res.status(201).json({ msg: "Favorilere eklendi", favorite });
-  } catch (error) {
-    console.error("Favori ekleme hatası:", error);
-    res.status(500).json({ msg: "Sunucu hatası" });
+async function addToFavorites(req, res) {
+  const u = await User.findById(req.user.id);
+  if (!u.favorites.includes(req.body.productId)) {
+    u.favorites.push(req.body.productId);
+    await u.save();
   }
-};
+  res.json(u.favorites);
+}
 
-const getFavorites = async (req, res) => {
-  try {
-    const favorites = await Favorite.find({ userId: req.user.id }).populate("productId");
-    res.status(200).json(favorites);
-  } catch (error) {
-    console.error("Favori listeleme hatası:", error);
-    res.status(500).json({ msg: "Sunucu hatası" });
-  }
-};
+async function getFavorites(req, res) {
+  const u = await User.findById(req.user.id).populate("favorites");
+  res.json(u.favorites);
+}
 
-const removeFavorite = async (req, res) => {
-  try {
-    const { productId } = req.params;
-    const deleted = await Favorite.findOneAndDelete({ userId: req.user.id, productId });
-    if (!deleted) {
-      return res.status(404).json({ msg: "Favori bulunamadı" });
-    }
-    res.status(200).json({ msg: "Favoriden kaldırıldı" });
-  } catch (error) {
-    console.error("Favori silme hatası:", error);
-    res.status(500).json({ msg: "Sunucu hatası" });
-  }
-};
+async function removeFavorite(req, res) {
+  const u = await User.findById(req.user.id);
+  u.favorites = u.favorites.filter(
+    id => id.toString() !== req.params.productId
+  );
+  await u.save();
+  res.json(u.favorites);
+}
 
-module.exports = {
-  addToFavorites,
-  getFavorites,
-  removeFavorite
-};
+module.exports = { addToFavorites, getFavorites, removeFavorite };

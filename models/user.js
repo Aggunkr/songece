@@ -1,26 +1,12 @@
+// models/User.js
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   email:    { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role:     { type: String, default: "user" },
-  address: {
-    street: { type: String },
-    city:   { type: String },
-    state:  { type: String },
-    zip:    { type: String },
-    country:{ type: String }
-  },
-  favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }]
+  favorites:[{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }]
 }, { timestamps: true });
 
-userSchema.pre("save", async function(next) {
-  if (!this.isModified("password")) return next();
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-  next();
-});
-
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.models.User || mongoose.model("User", userSchema);
