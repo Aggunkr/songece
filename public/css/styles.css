@@ -1,36 +1,9 @@
-/* public/css/style.css */
-
-/* Genel Ayarlar */
-body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f8f9fa;
-}
-.navbar-brand {
-  font-weight: 600;
-}
-
-/* Hero bölümü */
+body { background: #f8f9fa; }
 .hero {
   background: url('../images/hero-bg.jpg') center/cover no-repeat;
-  color: white;
-  padding: 100px 0;
-  text-align: center;
+  height: 60vh;
+  display: flex;
+  align-items: center;
 }
-.hero h1 {
-  font-size: 3rem;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-}
-
-/* Ürün Kartları */
-.card-img-top {
-  height: 200px;
-  object-fit: cover;
-}
-
-/* Footer */
-footer {
-  background-color: #343a40;
-  color: #aaa;
-  padding: 20px 0;
-  text-align: center;
-}
+.card { border: none; }
+footer { background: #fff; }

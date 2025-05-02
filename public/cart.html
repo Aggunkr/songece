@@ -1,42 +1,36 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sepet - Ağgün Giyim</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sepetim</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
-  <header>
-    <h1>Sepetim</h1>
-    <nav>
-      <ul>
-        <li><a href="/">Ana Sayfa</a></li>
-        <li><a href="/products">Ürünler</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <main>
-    <div class="cart-items">
-      <!-- Sepetinizde eklenen ürünler burada listelenecek -->
-      <p>Sepetinizde ürün bulunmamaktadır.</p>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Aggun</a>
+      <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navMenu">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div id="navMenu" class="collapse navbar-collapse">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item"><a class="nav-link" href="index.html">Anasayfa</a></li>
+          <li class="nav-item"><a class="nav-link" href="products.html">Ürünler</a></li>
+          <li class="nav-item"><a class="nav-link active" href="#">Sepet</a></li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <section class="payment-methods">
-      <h2>Ödeme Seçenekleri</h2>
-      <ul>
-        <li>Kredi/Banka Kartı</li>
-        <li>Google Play Ödemesi</li>
-        <li>Kapıda Ödeme</li>
-      </ul>
-      <button class="btn">Siparişi Onayla</button>
-    </section>
-  </main>
+  <div class="container py-5">
+    <h2 class="mb-4">Sepetiniz</h2>
+    <div id="cartItems" class="list-group mb-4"></div>
+    <button id="checkoutBtn" class="btn btn-success">Sipariş Oluştur</button>
+  </div>
 
-  <footer>
-    <p>&copy; 2025 Ağgün Giyim Mağazası</p>
-  </footer>
-  <script src="js/script.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
