@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>İletişim - Ağgün Giyim</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header>
+    <h1>İletişim</h1>
+    <nav>
+      <ul>
+        <li><a href="/">Ana Sayfa</a></li>
+        <li><a href="/about">Hakkımızda</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="contact-info">
+      <p>Telefon: 0546 472 71 27</p>
+      <p>E-posta: <a href="mailto:222380056@ogr.uludag.edu.tr">222380056@ogr.uludag.edu.tr</a></p>
+      <p>Instagram: <a href="https://www.instagram.com/ahmet_aggun.27" target="_blank">@ahmet_aggun.27</a></p>
+    </section>
+    <section class="contact-form">
+      <h2>Bize Yazın</h2>
+      <form action="/contact" method="POST">
+        <input type="text" name="name" placeholder="Adınız" required>
+        <input type="email" name="email" placeholder="E-posta" required>
+        <textarea name="message" placeholder="Mesajınız" required></textarea>
+        <button type="submit" class="btn">Gönder</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Ağgün Giyim Mağazası</p>
+  </footer>
+  <script src="js/script.js"></script>
+</body>
+</html>

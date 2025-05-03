@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Profil</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Anasayfa</a>
+    <a href="products.html">Ürünler</a>
+    <span id="nav-auth">
+      <a id="login-link" href="login.html">Giriş Yap</a>
+      <a id="register-link" href="register.html">Kayıt Ol</a>
+      <a id="profile-link" href="profile.html" style="display:none">Profilim</a>
+    </span>
+  </nav>
+  <div class="profile">
+    <h2>Profil Bilgilerim</h2>
+    <p id="fullname"></p>
+    <p id="email"></p>
+    <h3>Adres</h3>
+    <textarea id="address" placeholder="Adresinizi girin"></textarea>
+    <button id="save-address">Kaydet</button>
+    <h3>Siparişler</h3>
+    <ul id="order-list"></ul>
+  </div>
+  <script src="js/main.js"></script>
+  <script src="js/profile.js"></script>
+</body>
+</html>

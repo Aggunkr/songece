@@ -1,0 +1,17 @@
+/* Grid düzeni */
+#product-list, #favorites-list, #search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+/* Kart görünümü */
+.product-card { background: white; border-radius: 0.75rem; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.05); transition: transform .2s, box-shadow .2s; }
+.product-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+.product-image { width: 100%; height: 180px; object-fit: cover; }
+.btn-primary { display: inline-block; margin-top: 0.75rem; padding: 0.5rem 1rem; border-radius: 0.5rem; font-weight: 500; transition: background .2s, transform .1s; }
+.btn-primary:hover { transform: translateY(-1px); }
+/* Yorumlar */
+.comments-section ul { list-style: none; padding: 0; }
+.comments-section li { background: #fafafa; border: 1px solid #eee; border-radius: 0.5rem; padding: 0.75rem; margin-bottom: 0.75rem; }
+/* Navbar gizleme */
+.hidden { display: none !important; }
