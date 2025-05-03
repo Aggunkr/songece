@@ -9,9 +9,10 @@ async function getUserProfile(req, res) {
 async function updateUserProfile(req, res) {
   const u = await User.findById(req.user.id);
   if (!u) return res.status(404).json({ msg: "Kullanıcı bulunamadı" });
-  const { username, email } = req.body;
+  const { username, email, address } = req.body;
   if (username) u.username = username;
   if (email)    u.email = email;
+  if (address !== undefined) u.address = address;
   await u.save();
   res.json(u);
 }

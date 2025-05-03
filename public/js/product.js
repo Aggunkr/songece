@@ -14,7 +14,7 @@ async function loadDetail() {
   `;
 }
 async function loadComments() {
-  const res = await fetch(`/api/products/${id}/comments`);
+  const res = await fetch(`/api/reviews/${id}`);
   const comments = await res.json();
   const ul = document.getElementById('comments-list'); ul.innerHTML='';
   comments.forEach(c => {
@@ -25,18 +25,18 @@ async function loadComments() {
 }
 async function addToCart() {
   if(!token) return alert('Giriş yapın');
-  await fetch('/api/cart',{method:'POST',headers:{'Content-Type':'application/json','Authorization':token},body:JSON.stringify({productId:id})});
+  await fetch('/api/cart',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({productId:id})});
   alert('Sepete eklendi'); loadDetail();
 }
 async function addToFav() {
   if(!token) return alert('Giriş yapın');
-  await fetch('/api/favorites',{method:'POST',headers:{'Content-Type':'application/json','Authorization':token},body:JSON.stringify({productId:id})});
+  await fetch('/api/favorites',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({productId:id})});
   alert('Favorilere eklendi');
 }
 async function postComment() {
   if(!token) return alert('Giriş yapın');
   const text = document.getElementById('comment-input').value;
-  await fetch(`/api/products/${id}/comments`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':token},body:JSON.stringify({text})});
+  await fetch(`/api/reviews/${id}`,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({text})});
   document.getElementById('comment-input').value=''; loadComments();
 }
 document.addEventListener('DOMContentLoaded', () => {

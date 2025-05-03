@@ -2,7 +2,7 @@ const token = localStorage.getItem('token');
 if (!token) location.href = 'login.html';
 
 async function loadProfile() {
-  const res = await fetch('/api/users/me', { headers:{ Authorization: token } });
+  const res = await fetch('/api/users/profile', { headers:{ Authorization: token } });
   const u = await res.json();
   document.getElementById('fullname').textContent = u.name;
   document.getElementById('email').textContent = u.email;
@@ -11,7 +11,7 @@ async function loadProfile() {
 
 async function saveAddress() {
   const address = document.getElementById('address').value;
-  await fetch('/api/users/me/address', {
+  await fetch('/api/users/profile/address', {
     method:'PUT', headers:{ 'Content-Type':'application/json', 'Authorization': token },
     body: JSON.stringify({ address })
   });

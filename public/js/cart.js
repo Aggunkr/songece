@@ -1,7 +1,7 @@
 const token = localStorage.getItem('token');
 if(!token){alert('Giriş yapın'); location.href='login.html';}
 async function loadCart() {
-  const res = await fetch('/api/cart',{headers:{Authorization:token}});
+  const res = await fetch('/api/cart',{headers:{Authorization:'Bearer '+token}});
   const {items} = await res.json();
   const container = document.getElementById('cart-items'); container.innerHTML='';
   let total = 0;
@@ -21,7 +21,7 @@ async function loadCart() {
   document.getElementById('cart-summary').textContent='Toplam: '+total.toFixed(2)+' ₺';
 }
 async function removeFromCart(id) {
-  await fetch(`/api/cart/${id}`,{method:'DELETE',headers:{Authorization:token}});
+  await fetch(`/api/cart/${id}`,{method:'DELETE',headers:{Authorization:'Bearer '+token}});
   loadCart();
 }
 document.addEventListener('DOMContentLoaded',()=>{

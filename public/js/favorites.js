@@ -1,7 +1,7 @@
 const token = localStorage.getItem('token');
 if(!token){alert('Giriş yapın'); location.href='login.html';}
 async function loadFavorites() {
-  const res = await fetch('/api/favorites',{headers:{Authorization:token}});
+  const res = await fetch('/api/favorites',{headers:{Authorization:'Bearer '+token}});
   const favs = await res.json();
   const container = document.getElementById('favorites-list'); container.innerHTML='';
   favs.forEach(p=>{

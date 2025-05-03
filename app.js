@@ -10,6 +10,8 @@ const productRoutes = require("./routes/productRoutes");
 const userRoutes    = require("./routes/userRoutes");
 const adminRoutes   = require("./routes/adminRoutes");
 const reviewRoutes  = require("./routes/reviewRoutes");
+const favoriteRoutes = require("./routes/favoriteRoutes");
+const orderRoutes    = require("./routes/orderRoutes");
 
 const app = express();
 app.use(cors());
@@ -28,6 +30,8 @@ app.use("/api/products",productRoutes);
 app.use("/api/users",   userRoutes);
 app.use("/api/admin",   adminRoutes);
 app.use("/api/reviews", reviewRoutes);
+app.use("/api/favorites", favoriteRoutes);
+app.use("/api/orders", orderRoutes);
 
 app.get("/", (req,res) => res.send("🚀 Aggun E-Ticaret API"));
 
