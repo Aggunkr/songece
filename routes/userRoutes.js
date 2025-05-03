@@ -1,15 +1,24 @@
 // routes/userRoutes.js
 const express = require("express");
 const router  = express.Router();
-const { getUserProfile, updateUserProfile } = require("../controllers/userController");
-const { addToFavorites, getFavorites, removeFavorite } = require("../controllers/favoriteController");
-const { verifyToken: protect } = require("../middleware/authMiddleware");
 
-router.get("/profile",  protect, getUserProfile);
-router.put("/profile",  protect, updateUserProfile);
+// Aşağıdaki satırın, protect middleware'ini doğru çektiğinden emin olun:
+const { protect } = require("../middleware/authMiddleware");
 
-router.post("/favorites",          protect, addToFavorites);
-router.get("/favorites",           protect, getFavorites);
-router.delete("/favorites/:productId", protect, removeFavorite);
+const {
+  registerUser,
+  loginUser,
+  getUserProfile,
+} = require("../controllers/userController");
+
+// Test için—geliştirme aşamasında şu satırları ekleyip kontrol edebilirsiniz:
+// console.log("registerUser:",   registerUser);
+// console.log("loginUser:",      loginUser);
+// console.log("getUserProfile:", getUserProfile);
+
+router.post( "/users/register", registerUser);
+router.post( "/users/login",    loginUser);
+// Burada protect middleware’inin fonksiyon olduğundan %100 emin olmalısınız:
+router.get(  "/users/profile",  protect, getUserProfile);
 
 module.exports = router;

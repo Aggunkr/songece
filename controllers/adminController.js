@@ -1,66 +1,56 @@
-const User = require("../models/User");
+// controllers/adminController.js
+const User    = require("../models/User");
 const Product = require("../models/Product");
-const Order = require("../models/Order");
 
-exports.getUsers = async (req, res) => {
+// Yeni ürün ekleme
+async function createProduct(req, res) {
   try {
-    const users = await User.find();
-    res.json(users);
-  } catch (error) {
-    res.status(500).json({ msg: "Sunucu hatası" });
+    const product = await Product.create(req.body);
+    return res.status(201).json(product);
+  } catch (err) {
+    return res.status(400).json({ msg: err.message });
   }
-};
+}
 
-exports.deleteUser = async (req, res) => {
+// Ürünleri güncelleme
+async function updateProduct(req, res) {
   try {
-    await User.findByIdAndDelete(req.params.userId);
-    res.json({ msg: "Kullanıcı silindi" });
-  } catch (error) {
-    res.status(500).json({ msg: "Sunucu hatası" });
+    const updated = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+    if (!updated) {
+      return res.status(404).json({ msg: "Ürün bulunamadı" });
+    }
+    return res.status(200).json(updated);
+  } catch (err) {
+    return res.status(400).json({ msg: err.message });
   }
-};
+}
 
-exports.getProducts = async (req, res) => {
+// Ürün silme
+async function deleteProduct(req, res) {
   try {
-    const products = await Product.find();
-    res.json(products);
-  } catch (error) {
-    res.status(500).json({ msg: "Sunucu hatası" });
+    const deleted = await Product.findByIdAndDelete(req.params.id);
+    if (!deleted) {
+      return res.status(404).json({ msg: "Ürün bulunamadı" });
+    }
+    return res.status(200).json({ msg: "Ürün silindi" });
+  } catch (err) {
+    return res.status(400).json({ msg: err.message });
   }
-};
+}
 
-exports.updateProduct = async (req, res) => {
-  try {
-    const updatedProduct = await Product.findByIdAndUpdate(req.params.productId, req.body, { new: true });
-    res.json({ msg: "Ürün güncellendi", product: updatedProduct });
-  } catch (error) {
-    res.status(500).json({ msg: "Sunucu hatası" });
-  }
-};
+// Tüm kullanıcıları listeleme
+async function getAllUsers(req, res) {
+  const users = await User.find().select("-password");
+  return res.status(200).json(users);
+}
 
-exports.deleteProduct = async (req, res) => {
-  try {
-    await Product.findByIdAndDelete(req.params.productId);
-    res.json({ msg: "Ürün silindi" });
-  } catch (error) {
-    res.status(500).json({ msg: "Sunucu hatası" });
-  }
-};
-
-exports.getOrders = async (req, res) => {
-  try {
-    const orders = await Order.find().populate("items.product");
-    res.json(orders);
-  } catch (error) {
-    res.status(500).json({ msg: "Sunucu hatası" });
-  }
-};
-
-exports.updateOrderStatus = async (req, res) => {
-  try {
-    const updatedOrder = await Order.findByIdAndUpdate(req.params.orderId, { status: req.body.status }, { new: true });
-    res.json({ msg: "Sipariş durumu güncellendi", order: updatedOrder });
-  } catch (error) {
-    res.status(500).json({ msg: "Sunucu hatası" });
-  }
+module.exports = {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getAllUsers,
 };

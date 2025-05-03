@@ -6,6 +6,7 @@ function verifyToken(req, res, next) {
   if (!header) return res.status(401).json({ msg: "Token gerekli" });
   const token = header.split(" ")[1];
   if (!token) return res.status(401).json({ msg: "Token bulunamadı" });
+
   try {
     req.user = jwt.verify(token, process.env.JWT_SECRET);
     next();
@@ -15,10 +16,14 @@ function verifyToken(req, res, next) {
 }
 
 function isAdmin(req, res, next) {
-  if (req.user.role !== "admin") {
+  if (!req.user || req.user.role !== "admin") {
     return res.status(403).json({ msg: "Yetkisiz erişim" });
   }
   next();
 }
 
-module.exports = { verifyToken, isAdmin };
+// Burada alias veriyoruz: router’da protect diye kullanacağız
+module.exports = {
+  protect: verifyToken,
+  isAdmin,
+};

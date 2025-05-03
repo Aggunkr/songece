@@ -1,28 +1,22 @@
-Windows PowerShell
-Copyright (C) Microsoft Corporation. All rights reserved.
+// routes/favoriteRoutes.js
+const express = require("express");
+const router  = express.Router();
 
-Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows
+// protect alias’ı verifyToken fonksiyonuna işaret ediyor
+const { protect } = require("../middleware/authMiddleware");
 
-PS C:\Masaüstü\AggunECommerceww> npm start
+const {
+  addToFavorites,
+  getFavorites,
+  removeFavorite,
+} = require("../controllers/favoriteController");
 
-> aggunecommerce@1.0.0 start
-> node app.js
+// Test amaçlı (geliştirme sırasında kaldırabilirsiniz)
+// console.log("protect:", protect);
+// console.log("addToFavorites:", addToFavorites);
 
-C:\Masaüstü\AggunECommerceww\node_modules\express\lib\router\route.js:216
-        throw new Error(msg);
-        ^
+router.post(   "/favorites",             protect, addToFavorites);
+router.get(    "/favorites",             protect, getFavorites);
+router.delete( "/favorites/:productId",  protect, removeFavorite);
 
-Error: Route.post() requires a callback function but got a [object Undefined]
-    at Route.<computed> [as post] (C:\Masaüstü\AggunECommerceww\node_modules\express\lib\router\route.js:216:15)
-    at proto.<computed> [as post] (C:\Masaüstü\AggunECommerceww\node_modules\express\lib\router\index.js:521:19)
-    at Object.<anonymous> (C:\Masaüstü\AggunECommerceww\routes\favoriteRoutes.js:7:8)
-    at Module._compile (node:internal/modules/cjs/loader:1554:14)
-    at Object..js (node:internal/modules/cjs/loader:1706:10)
-    at Module.load (node:internal/modules/cjs/loader:1289:32)
-    at Function._load (node:internal/modules/cjs/loader:1108:12)
-    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
-    at Module.require (node:internal/modules/cjs/loader:1311:12)
-
-Node.js v22.14.0
-PS C:\Masaüstü\AggunECommerceww>
+module.exports = router;

@@ -1,26 +1,26 @@
 // routes/adminRoutes.js
 const express = require("express");
 const router  = express.Router();
-const { verifyToken, isAdmin } = require("../middleware/authMiddleware");
-const upload = require("../middleware/upload");
-const Product = require("../models/Product");
 
-router.post(
-  "/products",
-  verifyToken,
-  isAdmin,
-  upload.single("image"),
-  async (req, res) => {
-    if (!req.file) return res.status(400).json({ msg:"Resim eksik" });
-    const p = new Product({
-      name:req.body.name,
-      price:req.body.price,
-      description:req.body.description,
-      category:req.body.category,
-      imageUrl:`/uploads/${req.file.filename}`
-    });
-    res.status(201).json(await p.save());
-  }
-);
+// Auth middleware — authMiddleware.js içinde şu şekilde export ettiğimizden emin olun:
+// module.exports = { protect: verifyToken, isAdmin };
+const { protect, isAdmin } = require("../middleware/authMiddleware");
+
+const {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+  getAllUsers,
+} = require("../controllers/adminController");
+
+// Development sırasında kontrol etmek için ekleyebilirsiniz:
+// console.log("protect:",    protect);
+// console.log("isAdmin:",    isAdmin);
+// console.log("createProduct:", createProduct);
+
+router.post(   "/admin/products",          protect, isAdmin, createProduct);
+router.put(    "/admin/products/:id",      protect, isAdmin, updateProduct);
+router.delete( "/admin/products/:id",      protect, isAdmin, deleteProduct);
+router.get(    "/admin/users",             protect, isAdmin, getAllUsers);
 
 module.exports = router;
