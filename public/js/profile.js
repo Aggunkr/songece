@@ -1,18 +1,36 @@
-const API = 'https://aggun-ecommerce-api.onrender.com';
-async function loadProfile(){
-  const token=localStorage.getItem('token');
-  const res=await fetch(`${API}/api/users/profile`,{headers:{'Authorization':'Bearer '+token}});
-  const u=await res.json();
-  const f=document.getElementById('profileForm');
-  f.username.value=u.username; f.email.value=u.email;
+const token = localStorage.getItem('token');
+if (!token) location.href = 'login.html';
+
+async function loadProfile() {
+  const res = await fetch('/api/users/me', { headers:{ Authorization: token } });
+  const u = await res.json();
+  document.getElementById('fullname').textContent = u.name;
+  document.getElementById('email').textContent = u.email;
+  document.getElementById('address').value = u.address || '';
 }
-document.getElementById('profileForm').addEventListener('submit',async e=>{
-  e.preventDefault();
-  const token=localStorage.getItem('token');
-  const res=await fetch(`${API}/api/users/profile`,{
-    method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
-    body:JSON.stringify({ username:e.target.username.value,email:e.target.email.value,password:e.target.password.value})
+
+async function saveAddress() {
+  const address = document.getElementById('address').value;
+  await fetch('/api/users/me/address', {
+    method:'PUT', headers:{ 'Content-Type':'application/json', 'Authorization': token },
+    body: JSON.stringify({ address })
   });
-  alert((await res.json()).msg||'Güncellendi');
+  alert('Adres kaydedildi');
+}
+
+async function loadOrders() {
+  const res = await fetch('/api/orders', { headers:{ Authorization: token } });
+  const orders = await res.json();
+  const ul = document.getElementById('order-list');
+  orders.forEach(o => {
+    const li = document.createElement('li');
+    li.textContent = `${new Date(o.createdAt).toLocaleDateString()} - ${o.items.length} ürün`;
+    ul.appendChild(li);
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadProfile();
+  loadOrders();
+  document.getElementById('save-address').onclick = saveAddress;
 });
-loadProfile();

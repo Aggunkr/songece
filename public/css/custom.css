@@ -1,0 +1,10 @@
+/* Custom overrides */
+.product-card {
+  @apply bg-white rounded-lg overflow-hidden shadow-md transform transition duration-300 hover:-translate-y-2 hover:shadow-lg;
+}
+.product-image {
+  @apply w-full h-48 object-cover;
+}
+.btn-primary {
+  @apply bg-blue-600 text-white py-2 px-4 rounded-md transition duration-200 hover:bg-blue-700;
+}

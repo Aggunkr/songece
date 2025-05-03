@@ -1,20 +1,40 @@
-const API = 'https://aggun-ecommerce-api.onrender.com';
-document.getElementById('loginForm')?.addEventListener('submit', async e => {
-  e.preventDefault();
-  const res = await fetch(`${API}/api/auth/login`, {
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({ email:e.target.email.value, password:e.target.password.value })
+// auth.js — login & register handling
+async function login() {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const res = await fetch('/api/auth/login', {
+    method:'POST', headers:{ 'Content-Type':'application/json' },
+    body: JSON.stringify({ email, password })
   });
   const data = await res.json();
-  if(data.token){ localStorage.setItem('token',data.token); location.href='index.html'; }
-  else alert(data.msg||'Hata');
-});
-document.getElementById('registerForm')?.addEventListener('submit',async e=>{
-  e.preventDefault();
-  const res=await fetch(`${API}/api/auth/register`,{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({ username:e.target.username.value,email:e.target.email.value,password:e.target.password.value })
+  if(data.token) {
+    localStorage.setItem('token', data.token);
+    location.href = 'index.html';
+  } else {
+    alert(data.message);
+  }
+}
+
+async function register() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+  const res = await fetch('/api/auth/register', {
+    method:'POST', headers:{ 'Content-Type':'application/json' },
+    body: JSON.stringify({ name, email, password })
   });
-  const data=await res.json();
-  alert(data.msg||'Hata'); if(data.msg==='Kayıt başarılı') location.href='login.html';
+  const data = await res.json();
+  if(data.user) {
+    alert('Kayıt başarılı! Giriş sayfasına yönlendiriliyorsunuz.');
+    location.href = 'login.html';
+  } else {
+    alert(data.message);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const loginBtn = document.getElementById('login-btn');
+  const registerBtn = document.getElementById('register-btn');
+  if(loginBtn) loginBtn.onclick = login;
+  if(registerBtn) registerBtn.onclick = register;
 });
