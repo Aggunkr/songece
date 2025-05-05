@@ -1,20 +1,26 @@
-const token = localStorage.getItem('token');
-if(!token){alert('Giriş yapın'); location.href='login.html';}
-async function loadFavorites() {
-  const res = await fetch('/api/favorites',{headers:{Authorization:'Bearer '+token}});
-  const favs = await res.json();
-  const container = document.getElementById('favorites-list'); container.innerHTML='';
-  favs.forEach(p=>{
-    const card=document.createElement('div'); card.className='product-card';
-    card.innerHTML=`
-      <img src="${p.imageUrl}" class="product-image">
-      <div class="p-4">
-        <h3>${p.name}</h3>
-        <p>${p.price} ₺</p>
-        <a href="product.html?id=${p._id}" class="btn-primary bg-blue-600 text-white hover:bg-blue-700">Detay</a>
-      </div>
-    `;
-    container.appendChild(card);
+document.addEventListener('DOMContentLoaded', async () => {
+  const token = localStorage.getItem('token');
+  if (!token) return window.location.href = 'login.html';
+  const res = await fetch('/api/favorites', {
+    headers: { 'Authorization': 'Bearer ' + token }
   });
-}
-document.addEventListener('DOMContentLoaded',loadFavorites);
+  const { favorites } = await res.json();
+  const list = document.getElementById('favItems');
+  list.innerHTML = '';
+  favorites.forEach(fav => {
+    const div = document.createElement('div');
+    div.textContent = fav.product.name;
+    const btn = document.createElement('button');
+    btn.textContent = 'Kaldır';
+    btn.addEventListener('click', async () => {
+      const r = await fetch('/api/favorites/' + fav.product._id, {
+        method: 'DELETE',
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      if (r.ok) div.remove();
+      else alert('Silinemedi');
+    });
+    div.appendChild(btn);
+    list.appendChild(div);
+  });
+});

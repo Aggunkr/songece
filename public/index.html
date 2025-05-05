@@ -1,4 +1,31 @@
 <!DOCTYPE html>
+<nav class="bg-white shadow mb-6 p-4">
+  <a id="navLogin" href="login.html">Giriş Yap</a>
+  <a id="navRegister" href="register.html">Kayıt Ol</a>
+  <a id="navCart" href="cart.html" style="display:none">Sepet</a>
+  <a id="navFav" href="favorites.html" style="display:none">Favoriler</a>
+  <a id="navProfile" href="profile.html" style="display:none">Profil</a>
+  <a id="navAdmin" href="admin/login.html" style="display:none">Admin</a>
+  <a id="navCart" href="cart.html" style="display:none">Sepet</a>
+  <a id="navFav" href="favorites.html" style="display:none">Favoriler</a>
+  <a id="navProfile" href="profile.html" style="display:none">Profil</a>
+  <a id="navAdmin" href="admin/login.html" style="display:none">Admin</a>
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="index.html" class="text-xl font-bold">AggunStor</a>
+    <div class="space-x-4">
+      <a id="home-link" href="index.html" class="px-3 py-2 rounded hover:bg-gray-200">Anasayfa</a>
+      <a id="profile-link" href="profile.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Profil</a>
+      <a id="cart-link" href="cart.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Sepet (<span id="cart-count">0</span>)</a>
+      <a id="favorites-link" href="favorites.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Favoriler</a>
+      <a id="admin-link" href="admin_panel.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Admin</a>
+      <a id="login-link" href="login.html" class="px-3 py-2 rounded hover:bg-gray-200">Giriş Yap</a>
+      <a id="register-link" href="register.html" class="px-3 py-2 rounded hover:bg-gray-200">Kayıt Ol</a>
+    </div>
+  </div>
+</nav>
+
+
+
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
@@ -10,7 +37,7 @@
 <body class="bg-gray-50 text-gray-800">
   <header class="bg-white shadow">
     <div class="container mx-auto px-4 py-6 flex justify-between items-center">
-      <h1 class="text-2xl font-bold">AggunStor</h1>
+      <div class="max-w-2xl mx-auto p-4"><input id="searchBar" placeholder="Ürün ara..." class="w-full p-2 border rounded mb-4"/></div><h1 class="text-2xl font-bold">AggunStor</h1>
       <nav class="flex items-center space-x-4">
         <a href="index.html" class="hover:text-blue-600">Anasayfa</a>
         <a href="products.html" class="hover:text-blue-600">Ürünler</a>
@@ -48,5 +75,20 @@
 
   <script src="js/main.js"></script>
   <script src="js/products.js"></script>
+
+<script>
+document.getElementById('searchBar').addEventListener('input', async (e) => {
+  const q = e.target.value;
+  const res = await fetch('/api/products?search=' + encodeURIComponent(q));
+  const data = await res.json();
+  const list = document.getElementById('productList');
+  list.innerHTML = '';
+  data.forEach(p => {
+    const li = document.createElement('li');
+    li.textContent = p.name + ' - ' + p.price;
+    list.appendChild(li);
+  });
+});
+</script>
 </body>
 </html>

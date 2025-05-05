@@ -12,7 +12,7 @@ async function loadProfile() {
 async function saveAddress() {
   const address = document.getElementById('address').value;
   await fetch('/api/users/profile/address', {
-    method:'PUT', headers:{ 'Content-Type':'application/json', 'Authorization': token },
+    method:'PUT', headers:{ 'Content-Type':'application/json', 'Authorization: 'Bearer ' + token },
     body: JSON.stringify({ address })
   });
   alert('Adres kaydedildi');

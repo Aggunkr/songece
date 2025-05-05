@@ -4,7 +4,9 @@ const router  = express.Router();
 const Product = require("../models/Product");
 
 router.get("/", async (req, res) => {
-  res.json(await Product.find());
+  const { search } = req.query;
+  const filter = search ? { name: { $regex: search, $options: 'i' } } : {};
+  res.json(await Product.find(filter));
 });
 
 router.get("/:id", async (req, res) => {

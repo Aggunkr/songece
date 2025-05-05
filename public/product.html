@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<nav class="bg-white shadow mb-6 p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="index.html" class="text-xl font-bold">AggunStor</a>
+    <div class="space-x-4">
+      <a id="home-link" href="index.html" class="px-3 py-2 rounded hover:bg-gray-200">Anasayfa</a>
+      <a id="profile-link" href="profile.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Profil</a>
+      <a id="cart-link" href="cart.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Sepet (<span id="cart-count">0</span>)</a>
+      <a id="favorites-link" href="favorites.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Favoriler</a>
+      <a id="admin-link" href="admin_panel.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Admin</a>
+      <a id="login-link" href="login.html" class="px-3 py-2 rounded hover:bg-gray-200">Giriş Yap</a>
+      <a id="register-link" href="register.html" class="px-3 py-2 rounded hover:bg-gray-200">Kayıt Ol</a>
+    </div>
+  </div>
+</nav>
+
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
@@ -11,17 +26,7 @@
   <!-- Navbar include -->
   <header class="bg-white shadow py-4 px-6 flex justify-between items-center">
     <h1 class="text-xl font-bold">AggunStor</h1>
-    <nav class="flex items-center space-x-4">
-      <a href="index.html">Anasayfa</a>
-      <a href="products.html">Ürünler</a>
-      <a id="cart-link" href="cart.html" class="hidden relative">Sepet<span id="cart-count" class="absolute -top-2 -right-3 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center">0</span></a>
-      <a id="favorites-link" href="favorites.html" class="hidden">Favoriler</a>
-      <span id="nav-auth">
-        <a id="login-link" href="login.html">Giriş Yap</a>
-        <a id="register-link" href="register.html">Kayıt Ol</a>
-        <a id="profile-link" href="profile.html" class="hidden">Profilim</a>
-      </span>
-    </nav>
+    
   </header>
   <main class="container mx-auto p-6">
     <div id="product-detail" class="bg-white rounded-lg shadow p-6 mb-6"></div>

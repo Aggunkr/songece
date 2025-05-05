@@ -12,10 +12,12 @@ const adminRoutes   = require("./routes/adminRoutes");
 const reviewRoutes  = require("./routes/reviewRoutes");
 const favoriteRoutes = require("./routes/favoriteRoutes");
 const orderRoutes    = require("./routes/orderRoutes");
+const cartRoutes    = require("./routes/cartRoutes");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use("/uploads", express.static(path.join(__dirname,"uploads")));
 
 // Statik dosyaları servis et
@@ -32,6 +34,7 @@ app.use("/api/admin",   adminRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/favorites", favoriteRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/cart", cartRoutes);
 
 app.get("/", (req,res) => res.send("🚀 Aggun E-Ticaret API"));
 

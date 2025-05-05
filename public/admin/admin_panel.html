@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Admin Panel</title></head>
+<body>
+  <h1>Admin Panel</h1>
+  <div id="controls">
+    <button id="logoutBtn">Çıkış Yap</button>
+  </div>
+
+  <h2>Ürün Yükle</h2>
+  <form id="productForm">
+    <label>İsim: <input type="text" id="prodName" required></label><br>
+    <label>Fiyat: <input type="number" id="prodPrice" required></label><br>
+    <button type="submit">Ürün Ekle</button>
+  </form>
+  <div id="prodMsg"></div>
+
+  <h2>Kullanıcılar</h2>
+  <button id="loadUsers">Kullanıcıları Listele</button>
+  <pre id="usersOutput"></pre>
+
+  <script src="../js/adminPanel.js"></script>
+</body>
+</html>

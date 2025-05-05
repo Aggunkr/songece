@@ -15,8 +15,8 @@ const {
 // console.log("protect:", protect);
 // console.log("addToFavorites:", addToFavorites);
 
-router.post(   "/favorites",             protect, addToFavorites);
-router.get(    "/favorites",             protect, getFavorites);
-router.delete( "/favorites/:productId",  protect, removeFavorite);
+router.post(   "\/",             protect, addToFavorites);
+router.get(    "\/",             protect, getFavorites);
+router.delete( "\/:productId",  protect, removeFavorite);
 
 module.exports = router;

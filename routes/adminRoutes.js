@@ -18,9 +18,9 @@ const {
 // console.log("isAdmin:",    isAdmin);
 // console.log("createProduct:", createProduct);
 
-router.post(   "/admin/products",          protect, isAdmin, createProduct);
-router.put(    "/admin/products/:id",      protect, isAdmin, updateProduct);
-router.delete( "/admin/products/:id",      protect, isAdmin, deleteProduct);
-router.get(    "/admin/users",             protect, isAdmin, getAllUsers);
+router.post(   "/products",          protect, isAdmin, createProduct);
+router.put(    "/products/:id",      protect, isAdmin, updateProduct);
+router.delete( "/products/:id",      protect, isAdmin, deleteProduct);
+router.get(    "/users",             protect, isAdmin, getAllUsers);
 
 module.exports = router;

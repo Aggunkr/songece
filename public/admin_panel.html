@@ -1,11 +1,29 @@
-<!DOCTYPE html>
 <html lang="tr">
+<nav class="bg-white shadow mb-6 p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="index.html" class="text-xl font-bold">AggunStor</a>
+    <div class="space-x-4">
+      <a id="home-link" href="index.html" class="px-3 py-2 rounded hover:bg-gray-200">Anasayfa</a>
+      <a id="profile-link" href="profile.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Profil</a>
+      <a id="cart-link" href="cart.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Sepet (<span id="cart-count">0</span>)</a>
+      <a id="favorites-link" href="favorites.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Favoriler</a>
+      <a id="admin-link" href="admin_panel.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Admin</a>
+      <a id="login-link" href="login.html" class="px-3 py-2 rounded hover:bg-gray-200">Giriş Yap</a>
+      <a id="register-link" href="register.html" class="px-3 py-2 rounded hover:bg-gray-200">Kayıt Ol</a>
+    </div>
+  </div>
+</nav>
+
+
+
 <head>
+  <script src="https://cdn.tailwindcss.com"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Paneli - Ürün Ekle</title>
 </head>
-<body>
+<body class="bg-gray-100 p-6">
+<nav class="bg-white shadow mb-6 p-4 flex justify-between"><div class="text-xl font-bold"><a href="/">My Shop</a></div><div class="space-x-4"><a href="/admin/products" class="px-4 py-2 bg-blue-500 text-white rounded">Ürünler</a><a href="/api/admin/users" class="px-4 py-2 bg-green-500 text-white rounded">Kullanıcılar</a></div></nav>
     <h2>Ürün Ekle</h2>
     <input type="text" id="name" placeholder="Ürün Adı">
     <input type="text" id="price" placeholder="Ürün Fiyatı">
@@ -20,7 +38,7 @@
             const description = document.getElementById("description").value;
             const image = document.getElementById("image").value;
 
-            fetch("/products/add", {
+            fetch("/api/admin/products", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ name, price, description, image })
@@ -31,5 +49,6 @@
             });
         }
     </script>
+  <script src="js/main.js"></script>
 </body>
 </html>

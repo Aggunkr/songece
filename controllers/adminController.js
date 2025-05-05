@@ -1,4 +1,4 @@
-// controllers/adminController.js
+
 const User    = require("../models/User");
 const Product = require("../models/Product");
 
@@ -15,30 +15,22 @@ async function createProduct(req, res) {
 // Ürünleri güncelleme
 async function updateProduct(req, res) {
   try {
-    const updated = await Product.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
-    if (!updated) {
-      return res.status(404).json({ msg: "Ürün bulunamadı" });
-    }
-    return res.status(200).json(updated);
+    const updated = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updated) return res.status(404).json({ msg: "Ürün bulunamadı" });
+    res.json(updated);
   } catch (err) {
-    return res.status(400).json({ msg: err.message });
+    res.status(400).json({ msg: err.message });
   }
 }
 
 // Ürün silme
 async function deleteProduct(req, res) {
   try {
-    const deleted = await Product.findByIdAndDelete(req.params.id);
-    if (!deleted) {
-      return res.status(404).json({ msg: "Ürün bulunamadı" });
-    }
-    return res.status(200).json({ msg: "Ürün silindi" });
+    const removed = await Product.findByIdAndDelete(req.params.id);
+    if (!removed) return res.status(404).json({ msg: "Ürün bulunamadı" });
+    res.json({ msg: "Ürün silindi" });
   } catch (err) {
-    return res.status(400).json({ msg: err.message });
+    res.status(400).json({ msg: err.message });
   }
 }
 
@@ -48,9 +40,4 @@ async function getAllUsers(req, res) {
   return res.status(200).json(users);
 }
 
-module.exports = {
-  createProduct,
-  updateProduct,
-  deleteProduct,
-  getAllUsers,
-};
+module.exports = { createProduct, updateProduct, deleteProduct, getAllUsers };

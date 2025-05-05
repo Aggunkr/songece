@@ -16,9 +16,9 @@ const {
 // console.log("loginUser:",      loginUser);
 // console.log("getUserProfile:", getUserProfile);
 
-router.post( "/users/register", registerUser);
-router.post( "/users/login",    loginUser);
+router.post( "/register", registerUser);
+router.post( "/login",    loginUser);
 // Burada protect middleware’inin fonksiyon olduğundan %100 emin olmalısınız:
-router.get(  "/users/profile",  protect, getUserProfile);
+router.get(  "/profile",  protect, getUserProfile);
 
 module.exports = router;

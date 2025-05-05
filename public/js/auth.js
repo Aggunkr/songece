@@ -1,21 +1,51 @@
-async function login() {
+async function login(event) {
+  event.preventDefault();
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
-  const res = await fetch('/api/auth/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email,password}) });
-  const data = await res.json();
-  if(data.token){ localStorage.setItem('token', data.token); location.href='index.html'; }
-  else alert(data.message);
+  try {
+    const res = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (res.ok && data.token) {
+      localStorage.setItem('token', data.token);
+      window.location.href = 'index.html';
+    } else {
+      alert(data.msg || 'Giriş yapılamadı');
+    }
+  } catch (err) {
+    alert('Hata oluştu: ' + err.message);
+  }
 }
-async function register() {
-  const name = document.getElementById('name').value;
+
+async function register(event) {
+  event.preventDefault();
+  const username = document.getElementById('name').value;
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
-  const res = await fetch('/api/auth/register', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({name,email,password}) });
-  const data = await res.json();
-  if(data.user){ alert('Kayıt başarılı'); location.href='login.html'; }
-  else alert(data.message);
+  try {
+    const res = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, email, password })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      alert(data.msg || 'Kayıt başarılı');
+      window.location.href = 'login.html';
+    } else {
+      alert(data.msg || 'Kayıt yapılamadı');
+    }
+  } catch (err) {
+    alert('Hata oluştu: ' + err.message);
+  }
 }
+
 document.addEventListener('DOMContentLoaded', () => {
-  const l = document.getElementById('login-btn'); if(l) l.onclick=login;
-  const r = document.getElementById('register-btn'); if(r) r.onclick=register;
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) loginForm.addEventListener('submit', login);
+  const registerForm = document.getElementById('registerForm');
+  if (registerForm) registerForm.addEventListener('submit', register);
 });

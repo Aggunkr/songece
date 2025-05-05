@@ -1,22 +1,36 @@
+
 <!DOCTYPE html>
-<html lang="tr">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Favorilerim - AggunStor</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="css/custom.css">
-</head>
-<body class="bg-gray-50 text-gray-800">
-  <header class="bg-white shadow py-4 px-6 flex justify-between items-center">
-    <h1 class="text-xl font-bold">AggunStor</h1>
-    <nav> <!-- ... same navbar ... --> </nav>
-  </header>
-  <main class="container mx-auto p-6">
-    <h2 class="text-2xl font-bold mb-4">Favorilerim</h2>
-    <section id="favorites-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></section>
-  </main>
+<nav class="bg-white shadow mb-6 p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <a href="index.html" class="text-xl font-bold">AggunStor</a>
+    <div class="space-x-4">
+      <a id="home-link" href="index.html" class="px-3 py-2 rounded hover:bg-gray-200">Anasayfa</a>
+      <a id="profile-link" href="profile.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Profil</a>
+      <a id="cart-link" href="cart.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Sepet (<span id="cart-count">0</span>)</a>
+      <a id="favorites-link" href="favorites.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Favoriler</a>
+      <a id="admin-link" href="admin_panel.html" class="px-3 py-2 rounded hidden hover:bg-gray-200">Admin</a>
+      <a id="login-link" href="login.html" class="px-3 py-2 rounded hover:bg-gray-200">Giriş Yap</a>
+      <a id="register-link" href="register.html" class="px-3 py-2 rounded hover:bg-gray-200">Kayıt Ol</a>
+    </div>
+  </div>
+</nav>
+<html lang="tr"><head><meta charset="UTF-8"><script src="https://cdn.tailwindcss.com"></script></head><body>
+<div class="max-w-2xl mx-auto mt-10">
+  <h2 class="text-2xl font-bold mb-4">Favorilerim</h2>
+  <ul id="favList" class="space-y-2"></ul>
+</div>
+<script>
+async function loadFavs() {
+  const res = await fetch('/api/favorites', { headers: { Authorization: 'Bearer ' + localStorage.getItem('token') } });
+  const data = await res.json();
+  const ul = document.getElementById('favList');
+  data.forEach(p => {
+    const li = document.createElement('li');
+    li.textContent = p.name;
+    ul.appendChild(li);
+  });
+}
+loadFavs();
+</script>
   <script src="js/main.js"></script>
-  <script src="js/favorites.js"></script>
-</body>
-</html>
+</body></html>
