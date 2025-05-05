@@ -22,13 +22,21 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Product form
   document.getElementById('productForm').addEventListener('submit', async e => {
     e.preventDefault();
-    const name = document.getElementById('prodName').value;
-    const price = document.getElementById('prodPrice').value;
+    const formData = new FormData();
+    formData.append('name', document.getElementById('prodName').value);
+    formData.append('price', document.getElementById('prodPrice').value);
+    const fileInput = document.getElementById('prodImage');
+    if (fileInput.files[0]) {
+      formData.append('image', fileInput.files[0]);
+    }
     const res = await fetch('/api/admin/products', {
       method: 'POST',
-      headers: {'Content-Type':'application/json','Authorization':'Bearer '+token},
-      body: JSON.stringify({ name, price })
+      headers: { 'Authorization': 'Bearer ' + token },
+      body: formData
     });
+    const data = await res.json();
+    document.getElementById('prodMsg').textContent = res.ok ? 'Ürün eklendi.' : (data.msg || 'Hata');
+  });
     const data = await res.json();
     document.getElementById('prodMsg').textContent = res.ok ? 'Ürün eklendi.' : (data.msg || 'Hata');
   });

@@ -1,9 +1,22 @@
-// routes/adminRoutes.js
 const express = require("express");
-const router  = express.Router();
+const multer = require('multer');
+const path = require('path');
+const router = express.Router();
 
-// Auth middleware — authMiddleware.js içinde şu şekilde export ettiğimizden emin olun:
-// module.exports = { protect: verifyToken, isAdmin };
+// Multer setup for image upload
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    const original = path.parse(file.originalname).name;
+    const safeName = original.replace(/\s+/g, "_").toLowerCase();
+    const ext = path.extname(file.originalname);
+    cb(null, safeName + "_" + Date.now() + ext);
+  }
+});
+const upload = multer({ storage });
+
 const { protect, isAdmin } = require("../middleware/authMiddleware");
 
 const {
@@ -13,14 +26,9 @@ const {
   getAllUsers,
 } = require("../controllers/adminController");
 
-// Development sırasında kontrol etmek için ekleyebilirsiniz:
-// console.log("protect:",    protect);
-// console.log("isAdmin:",    isAdmin);
-// console.log("createProduct:", createProduct);
-
-router.post(   "/products",          protect, isAdmin, createProduct);
-router.put(    "/products/:id",      protect, isAdmin, updateProduct);
-router.delete( "/products/:id",      protect, isAdmin, deleteProduct);
-router.get(    "/users",             protect, isAdmin, getAllUsers);
+router.post('/products', protect, isAdmin, upload.single('image'), createProduct);
+router.put("/products/:id", protect, isAdmin, updateProduct);
+router.delete("/products/:id", protect, isAdmin, deleteProduct);
+router.get("/users", protect, isAdmin, getAllUsers);
 
 module.exports = router;

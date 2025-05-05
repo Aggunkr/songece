@@ -4,6 +4,7 @@ const Product = require("../models/Product");
 
 // Yeni ürün ekleme
 async function createProduct(req, res) {
+  if (req.file) { req.body.image = `/uploads/${req.file.filename}`; }
   try {
     const product = await Product.create(req.body);
     return res.status(201).json(product);

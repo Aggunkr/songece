@@ -8,9 +8,10 @@
   </div>
 
   <h2>Ürün Yükle</h2>
-  <form id="productForm">
-    <label>İsim: <input type="text" id="prodName" required></label><br>
-    <label>Fiyat: <input type="number" id="prodPrice" required></label><br>
+  <form id="productForm" enctype="multipart/form-data">
+    <label>İsim: <input name="name" id="prodName" type="text" required></label><br>
+  <label>Fotoğraf: <input name="image" id="prodImage" type="file" accept="image/*"></label><br>
+    <label>Fiyat: <input name="price" id="prodPrice" type="number" required></label><br>
     <button type="submit">Ürün Ekle</button>
   </form>
   <div id="prodMsg"></div>
